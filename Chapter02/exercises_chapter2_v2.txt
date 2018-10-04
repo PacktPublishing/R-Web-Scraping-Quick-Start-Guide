@@ -1,0 +1,77 @@
+#Xpath Nodes
+
+<?xml version="1.0" encoding="UTF-8"?>
+	<publisher>
+ 		<product>
+ 			<title lang="en">Quick Start Guide: R</title>
+ 			<author>Olgun Aydin</author>
+ 			<year>2018</year>
+ 		</product>
+ 	</publisher>
+
+#Xpath Nodes 2
+
+<publisher> (root element node)
+<author>J Olgun Aydin</author> (element node)
+lang="en" (attribute node)
+
+#Xpath Nodes 3
+
+<product>
+	<title>Quick Start Guide: R</title>
+  	<author>Olgun Aydin</author>
+  	<year>2018</year>
+</product>
+
+#Xpath Nodes 4
+
+<product>
+  <title>Quick Start Guide: R</title>
+  <author>Olgun Aydin</author>
+  <year>2018</year>
+</product>
+
+#Xpath Nodes 5
+
+<product>
+  <title>Quick Start Guide: R</title>
+  <author>Olgun Aydin</author>
+  <year>2018</year>
+</product>
+
+#Xpath Nodes 6
+<publisher>
+	<product>
+   		<title>Quick Start Guide: R</title>
+   		<author>Olgun Aydin</author>
+   		<year>2018</year>
+ 	</product>
+</publisher>
+
+
+#Xpath Nodes 7
+<publisher>
+ 	<product>
+		<title>Quick Start Guide: R</title>
+ 		<author>Olgun Aydin</author>
+ 		<year>2018</year>
+ 	</product>
+</publisher>
+
+
+#RegEx - exercise 1#
+(([a-z]+)|([a-z]+\.[a-z]+))@[a-z]+\.[a-z]+
+
+
+#RegEx - exercise 2#
+(([a-z]+[0-9]+)|([a-z]+\.[a-z]+[0-9]+))@[a-z]+\.[a-z]+
+
+#XPath - exercise 1#
+$x('//*[@id="menu-books"]') 
+
+#XPath - exercise 2#
+//div[@class="menu-item-text"]/span/text()
+
+#XPath - exercise 3#
+//div[@id="menu-books"]/span/text()
+

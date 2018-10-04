@@ -1,0 +1,95 @@
+
+#collecting urls - url1
+
+http://www.airlinequality.com/airline-reviews/turkish-airlines/page/1/
+
+
+#collecting urls - url2
+http://www.airlinequality.com/airline-reviews/turkish-airlines/page/2/
+
+
+
+#collecting urls - R Code
+library(rvest)
+
+urls <- c("http://www.airlinequality.com/airline-reviews/turkish-airlines/page/1/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/2/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/3/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/4/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/5/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/6/"
+ )
+
+#collecting urls - XPath for Developer Tools Console
+$x('//div[@itemprop="reviewRating"]/span[@itemprop="ratingValue"]/text()') 
+
+#collecting urls - XPath2 for Developer Tools Console 
+$x('//time[@itemprop="datePublished"]/text()') 
+
+
+#Writing first script - R Code1
+library(rvest)
+
+#Writing first script - R Code2
+date<- NULL
+rating <- NULL
+
+#Writing first script - R Code3
+urls <- c("http://www.airlinequality.com/airline-reviews/turkish-airlines/page/1/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/2/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/3/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/4/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/5/",
+ "http://www.airlinequality.com/airline-reviews/turkish-airlines/page/6/"
+ )
+
+#Writing first script - R Code4
+ n<- length(urls)
+
+
+#Writing first script - R Code5
+for(i in 1:n)
+ {
+ #reading main url
+ h <- read_html(urls[i])
+ 
+#getting rating
+ r<- html_nodes(h, xpath = //div[@itemprop="reviewRating"]/span[@itemprop="ratingValue"]/text()')
+ 
+ #getting date
+ d<- html_nodes(h, xpath = '//time[@itemprop="datePublished"]/text()')
+ 
+ #saving results
+ date<- rbind(date,as.matrix(as.character(d)))
+ rating<- rbind(rating,as.matrix(as.character(r)))
+ }
+
+
+
+#Playing with data - R Code1
+date
+ [,1] 
+ [1,] "21st August 2018"
+ [2,] "20th August 2018"
+ [3,] "20th August 2018" 
+
+#Playing with data - R Code2
+date_new<- str_replace_all(date,"st","")
+date_new<- str_replace_all(date_new,"th","")
+date_new<- str_replace_all(date_new,"rd","")
+date_new<- str_replace_all(date_new,"nd","")
+date_new<- str_replace_all(date_new,"Augu","August")
+
+#Playing with data - R Code3
+date_final<- as.Date(date_new,format='%d %B %Y')
+final_df<- data.frame(rating, date_final)
+final_df$rating<- as.numeric(final_df$rating)
+
+
+#Playing with data - R Code4
+avg_ratings <- aggregate(rating~date_final, data = final_df, FUN= "mean")
+
+#Playing with data - R Code5
+plot(avg_ratings,type = "l")
+
+
