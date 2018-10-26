@@ -1,0 +1,66 @@
+#sample cronjob - 1
+0 2 * * * printf "" > /var/log/apache/error_log
+
+#sample cronjob - 2
+30 21 * * 6 /home/oracle/scripts/export_dump.sh
+
+#installing package
+install.packages("RPostgreSQL")
+
+#loading library
+library("RPostgreSQL")
+
+#load driver
+drv <- dbDriver("PostgreSQL")
+
+#connecting db
+con <- dbConnect(drv, dbname = "test2", host = "endpointofyourinstance",port=5432,user= "username", password ="pass")
+
+#collecting data from devveri.com
+
+      #loading library
+      library(rvest)
+
+      #creating NULL variables
+      name <- NULL
+      date <- NULL
+      comment_count <- NULL
+
+      #links for page
+      urls <- "http://devveri.com/"
+
+      #reading main url
+      h <- read_html(urls)
+
+      #getting names
+      n<- html_nodes(h, xpath =  
+      '/html/body/div[3]/div/div[1]/div/h2/a/text()')
+
+      #getting dates
+      d<- html_nodes(h, xpath =     
+      '/html/body/div[3]/div/div[1]/div/p[1]/span[1]/text()')
+
+      #getting comment counts
+      comc<- html_nodes(h, xpath =   
+      '/html/body/div[3]/div/div[1]/div/p[1]/span[4]/a/text()')
+
+      #saving results
+      name<- as.matrix(as.character(n))
+      date<- as.matrix(as.character(d))
+      comment_count <- as.matrix(as.character(comc))
+
+      #creating final data frame
+      final_data <- data.frame(name, comment_count, date) 
+
+#loading library
+library("RPostgreSQL")
+
+#load db driver
+drv <- dbDriver("PostgreSQL")
+#connecting to db
+con <-dbConnect(drv,dbname = "test2",host = "endpointofyourinstance", 
+port = 5432,user = "user",password = "pass")
+
+#writing final dataframes to the table
+dbWriteTable(con, "devveri", final_data, row.names = FALSE, append = TRUE)
+

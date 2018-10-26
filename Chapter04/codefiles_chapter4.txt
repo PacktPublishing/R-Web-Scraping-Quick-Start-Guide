@@ -1,0 +1,136 @@
+#installing libraries
+ library(RSelenium)
+
+ #loading drivers and starting selenium
+ rD <- rsDriver()
+ remDr <- rD[["client"]]
+
+ #navigate post which has packtpub hashtag
+remDr$navigate("https://www.instagram.com/p/BiFW2XFD8CM/?hl=en&tagged=packtpub")
+
+#XPath rule - 1
+$x('//*[@id="react-root"]/section/main/div/div/article/div[2]/div[1]/ul/li[2]/div/div/div/a')
+
+#Getting web element
+webElem2 <- remDr$findElement(using = "xpath",paste('//*[@id="react-root"]/section/main/div/div/article/div[2]/div[1]/ul/li[2]/div/div/div/a',sep=""))
+
+#Getting text of web element
+webElem2$getElementText()[[1]][1]
+[1] "sri_shyam"
+
+#Creating null variables
+username_mentioned_df<- NULL
+
+#creating for loop
+for(j in 1:9)
+{
+ webElem2 <- remDr$findElement(using = "xpath",paste("//*[@id='react-root']/section/main/div/div/article/div[2]/div[1]/ul/li[",j,"]/div/div/div/a",sep=""))
+ Sys.sleep(1)
+ username_mentioned<- webElem2$getElementText()[[1]][1]
+ username_mentioned_df <- rbind(username_mentioned_df,username_mentioned)
+}
+
+
+#data frame 1
+username_mentioned_df
+
+#XPath rule - 2
+$x("//*[@id='react-root']/section/main/div/div/article/div[2]/div[1]/ul/li[4]/div/div/div/span/a[1]")
+
+#Getting web element
+webElem2 <- remDr$findElement(using = "xpath",paste("//*[@id='react-root']/section/main/div/div/article/div[2]/div[1]/ul/li[4]/div/div/div/span/a[1]",sep="")
+
+#getting text of web element
+webElem2$getElementText()[[1]][1]
+[1] "@hmalviya9"
+
+#Creating NULL variable
+mentioned_username_df<- NULL
+
+#Creating for loop
+for(j in 1:9)
+{
+ webElem2 <- remDr$findElement(using = "xpath",paste("//*[@id='react-root']/section/main/div/div/article/div[2]/div[1]/ul/li[",j,"]/div/div/div/span",sep=""))
+ mentioned_username_check<- webElem2$getElementText()[[1]][1]
+ 
+ #checking if there is a mention or not 
+ if(str_detect(mentioned_username_check,"@")==TRUE)
+ {
+ webElem2 <- remDr$findElement(using = "xpath",paste("//*[@id='react-root']/section/main/div/div/article/div[2]/div[1]/ul/li[",j,"]/div/div/div/span/a[1]",sep=""))
+ mentioned_username<- webElem2$getElementText()[[1]][1]
+ }else{
+ mentioned_username<- ""
+ }
+ mentioned_username_df <- rbind(mentioned_username_df,mentioned_username)
+ Sys.sleep(1)
+}
+
+#Data frame
+mentioned_username_df
+
+#loading libraries
+ library(RSelenium)
+
+ #loading drivers and starting selenium
+ rD <- rsDriver()
+ remDr <- rD[["client"]]
+
+# Navigating main page of website
+remDr$navigate("http://devveri.com/")
+
+#Getting web element
+webElem1 <- remDr$findElement(using = "xpath", "/html/body/div[3]/div/div[1]/div[1]/h2/a")
+
+#Sending click event
+webElem2 <- remDr$findElement(using = "xpath", '//p[@class="pagination"]/span[@class="prev"]')
+webElem2$clickElement()
+
+#sending click event
+webElem2 <- remDr$findElement(using = "xpath", '//p[@class="pagination"]/span[@class="prev"]')
+webElem2$clickElement()
+
+#Stopping selenium driver
+rD[["server"]]$stop()
+[1] TRUE
+
+#navigating web page
+remDr$navigate("http://devveri.com/")
+
+#XPath rule - 3
+$x('/html/body/div[3]/div/div[2]/div[1]/ul/li/a/text()')
+
+#Getting web element
+webElem4 <- remDr$findElement(using = "xpath", '/html/body/div[3]/div/div[2]/div[1]/ul/li')
+webElem4$getElementText()
+
+#Getting text element of web element
+webElem4$getElementText()
+[[1]]
+[1] "Big Data (11)"
+
+#regex rule - 1
+[0-9][0-9]
+
+#regex rule - 2
+[a-zA-Z]+ [a-zA-Z]+
+
+#defining regex rule
+category<- webElem4$getElementText()[[1]][1]
+regex_for_count<- regexpr("[0-9][0-9]",category)
+
+#applying regex rule
+count <- regmatches(category, regex_for_count)
+
+#result
+count
+[1] "11"
+
+#defining regex rule
+regex_for_name<- regexpr("[a-zA-Z]+ [a-zA-Z]+",category)
+
+#applying regex rule
+name <-regmatches(category, regex_for_name)
+
+#result
+name
+[1] "Big Data"

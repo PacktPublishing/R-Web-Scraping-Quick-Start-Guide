@@ -1,0 +1,157 @@
+
+#XML tree
+<html>
+ <head>
+ <title>Looks like a tittle</title>
+ </head>
+ <body>
+ <p align="center">What's up ?</p>
+ </body>
+</html>
+
+
+#loading library and setting urls
+library(rvest)
+urls <- "http://devveri.com/"
+
+#XPath rule - 1
+$x('/html/body/div[3]/div/div[2]/div[1]/ul/li/a/text()') 
+
+#XPath rule - 2
+$x('/html/body/div[3]/div/div[2]/div[1]/ul/li/text()') 
+
+#XPath rule - 3
+$x('/html/body/div[3]/div/div[1]/div/h2/a/text()') 
+
+#XPath rule - 4
+$x('/html/body/div[3]/div/div[1]/div/p[1]/span[1]/text()') 
+
+#XPath rule - 5
+$x('/html/body/div[3]/div/div[1]/div/p[1]/span[4]/a/text()') 
+
+#loading library
+library(rvest)
+
+#creating NULL variables
+category<- NULL
+count <- NULL
+
+#links for page
+urls <- "http://devveri.com/"
+
+
+library(rvest)
+
+#creating NULL variables
+category<- NULL
+count <- NULL
+
+#links for page
+urls <- "http://devveri.com/"
+
+#reading main url
+h <- read_html(urls)
+  
+#getting categories
+c<- html_nodes(h, xpath = '/html/body/div[3]/div/div[2]/div[1]/ul/li/a/text()')
+  
+#getting counts
+cc<- html_nodes(h, xpath = '/html/body/div[3]/div/div[2]/div[1]/ul/li/text()')
+  
+#saving results, converting XMLs to character
+category<- as.matrix(as.character(c))
+count<- as.matrix(as.character(cc))
+
+#creating data frame 
+data.frame(category,count)
+
+#loading library
+library(rvest)
+
+#creating NULL variables
+name <- NULL
+date <- NULL
+comment_count <- NULL
+
+#creating NULL variables
+name <- NULL
+date <- NULL
+comment_count <- NULL
+
+#links for page
+urls <- "http://devveri.com/"
+
+#reading main url
+h <- read_html(urls)
+
+#getting names
+n<- html_nodes(h, xpath = '/html/body/div[3]/div/div[1]/div/h2/a/text()')
+
+#getting dates
+d<- html_nodes(h, xpath = '/html/body/div[3]/div/div[1]/div/p[1]/span[1]/text()')
+
+#getting comment counts
+comc<- html_nodes(h, xpath = '/html/body/div[3]/div/div[1]/div/p[1]/span[4]/a/text()')
+
+#saving results
+name<- as.matrix(as.character(n))
+
+#creating data frame
+data.frame(name,date,comment_count)
+
+#printing counts
+count
+
+#string manipulation
+count <- str_replace_all(count,"\\(","")
+count <- str_replace_all(count,"\\)","")
+count <- str_replace_all(count,"\n","")
+
+#creating dataframe
+data.frame(category,count)
+
+#creating final dataframe
+categories <- data.frame(category,count)
+categories$count<-as.numeric(categories$count)
+
+#drawing plotly graph
+plot_ly(categories, x = ~category, y = ~count, type = 'bar')
+
+#creating data frame
+data.frame(name,date,comment_count)
+
+#creating final data frame
+comments<- data.frame(name,date,comment_count)
+comments$comment_count<- as.numeric(comments$comment_count)
+
+#calculating average counts for each date
+avg_comment_counts <- aggregate(comment_count~date, data = comments, FUN= "mean")
+
+#draw plot
+plot(avg_ratings,type = "l")
+
+#calculate summary stats
+min_comment_count<- min(comments$comment_count)
+max_comment_count<- max(comments$comment_count)
+avg_comment_count<- mean(comments$comment_count)
+median_comment_count<- median(comments$comment_count)
+
+#create final dataframe
+summary<- data.frame(min_comment_count, max_comment_count, avg_comment_count, median_comment_count)
+
+#draw plotly library
+plot_ly(x = "min", y = summary$min_comment_count, type = 'bar',name='min') %>%
+  add_trace(x = "max", y = summary$max_comment_count, type = 'bar',name='max')%>%
+  add_trace(x = "avg", y = summary$avg_comment_count, type = 'bar',name='average')%>%
+  add_trace(x = "median", y = summary$median_comment_count, type = 'bar',name='median')
+
+
+
+
+
+
+
+
+
+
+
