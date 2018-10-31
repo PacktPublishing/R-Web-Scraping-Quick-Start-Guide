@@ -60,7 +60,7 @@ Olgun is familiar with big data technologies, such as Hadoop and Spark, and is a
 He loves statistics, and loves to investigate new methods and share his experience with other people.
 
 
-## Other books by the authors
+## Other books by the author
 * [Applied Machine Learning and Deep Learning with R [Video]](https://www.packtpub.com/big-data-and-business-intelligence/applied-machine-learning-deep-learning-r-video?utm_source=github&utm_medium=repository&utm_campaign=9781788394673)
 * [Deep Dive into Statistical Modeling with R [Video]](https://www.packtpub.com/big-data-and-business-intelligence/deep-dive-statistical-modeling-r-video?utm_source=github&utm_medium=repository&utm_campaign=9781788396127)
 
